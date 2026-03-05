@@ -3,62 +3,66 @@ document.addEventListener('DOMContentLoaded', () => {
     const formMessage = document.getElementById('form-message');
     const navLinks = document.getElementById('nav-links');
 
-    // Environment Check
-    if (window.location.protocol === 'file:') {
-        alert('CRITICAL: You are opening this via file protocol. The dynamic blog and booking system REQUIRE the server. Please run "node server/server.js" and visit http://localhost:3000');
-    }
-    console.log('Fetching destination pages...');
-    fetch('/api/pages')
-        .then(res => {
-            if (!res.ok) throw new Error('Server responded with ' + res.status);
-            return res.json();
-        })
-        .then(pages => {
-            console.log('Successfully loaded ' + pages.length + ' pages');
-            const blogGrid = document.getElementById('blog-grid');
-            if (blogGrid) {
-                blogGrid.innerHTML = ''; // Clear hardcoded items
-                if (pages.length === 0) {
-                    blogGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #888;">No destinations found. Add some in the admin panel!</p>';
-                }
-            }
+    // Environment Check - removed for GitHub Pages compatibility
+    console.log('Loading destination pages...');
 
-            pages.forEach(page => {
-                // Add to Blog Grid
-                if (blogGrid) {
-                    const card = document.createElement('div');
-                    card.className = 'car-card';
+    // Static blog data for GitHub Pages
+    const staticPages = [
+        {
+            id: 101,
+            title: "Delhi to Jaipur: A Royal Expedition",
+            price: "$1,200 (Inclusive of Luxury Fleet)",
+            image: "assets/jaipur.jpg"
+        },
+        {
+            id: 102,
+            title: "Delhi to Haridwar: Divine Luxury",
+            price: "$800 (One-Way Luxury Transfer)",
+            image: "assets/haridwar.jpg"
+        },
+        {
+            id: 103,
+            title: "Delhi to Rishikesh: The Ultimate Adventure",
+            price: "$950 (All-Terrain Luxury)",
+            image: "assets/rishikesh.jpg"
+        },
+        {
+            id: 104,
+            title: "Delhi to Shimla: Majestic Mountain Vistas",
+            price: "$1,500 (Executive Mountain Package)",
+            image: "assets/shimla.jpg"
+        },
+        {
+            id: 105,
+            title: "Delhi to Agra: The Fast Track to Love",
+            price: "$1,100 (Express Tour)",
+            image: "assets/agra.jpg"
+        }
+    ];
 
-                    let imgPath = 'assets/jaipur.jpg';
-                    const title = (page.title || '').toLowerCase();
-                    if (title.includes('haridwar')) imgPath = 'assets/haridwar.jpg';
-                    else if (title.includes('rishikesh')) imgPath = 'assets/rishikesh.jpg';
-                    else if (title.includes('shimla')) imgPath = 'assets/shimla.jpg';
-                    else if (title.includes('agra')) imgPath = 'assets/agra.jpg';
+    const blogGrid = document.getElementById('blog-grid');
+    if (blogGrid) {
+        blogGrid.innerHTML = ''; // Clear loading message
 
-                    card.innerHTML = `
-                        <div class="car-image">
-                            <img src="${imgPath}" alt="${page.title}" style="width: 100%; height: 100%; object-fit: cover;">
-                        </div>
-                        <div class="car-info">
-                            <h3>${page.title}</h3>
-                            <p>${page.price || 'Luxury Route'}</p>
-                            <a href="/pages/${page.id}" class="price" style="text-decoration: none;">Read More &rarr;</a>
-                        </div>
-                    `;
-                    blogGrid.appendChild(card);
-                }
-            });
-        })
-        .catch(err => {
-            console.error('Failed to fetch pages:', err);
-            const blogGrid = document.getElementById('blog-grid');
-            if (blogGrid) {
-                blogGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: red;">Failed to connect to the luxury travel server. Please ensure the backend is running at http://localhost:3000</p>';
-            }
+        staticPages.forEach(page => {
+            const card = document.createElement('div');
+            card.className = 'car-card';
+
+            card.innerHTML = `
+                <div class="car-image">
+                    <img src="${page.image}" alt="${page.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="car-info">
+                    <h3>${page.title}</h3>
+                    <p>${page.price}</p>
+                    <a href="pages/${page.id}.html" class="price" style="text-decoration: none;">Read More &rarr;</a>
+                </div>
+            `;
+            blogGrid.appendChild(card);
         });
+    }
 
-    // Handle Booking Form Submission
+    // Handle Booking Form Submission (static version for GitHub Pages)
     bookingForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -69,29 +73,14 @@ document.addEventListener('DOMContentLoaded', () => {
             date: document.getElementById('date').value
         };
 
-        try {
-            const response = await fetch('/api/bookings', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            });
+        // For GitHub Pages, show success message since we can't run backend
+        formMessage.textContent = 'Booking request received! Our luxury concierge will contact you within 24 hours to confirm your reservation.';
+        formMessage.style.display = 'block';
+        formMessage.style.color = '#d4af37';
+        bookingForm.reset();
 
-            if (response.ok) {
-                formMessage.textContent = 'Booking Confirmed! We will contact you shortly.';
-                formMessage.style.display = 'block';
-                formMessage.style.color = '#d4af37';
-                bookingForm.reset();
-            } else {
-                formMessage.textContent = 'Something went wrong. Please try again.';
-                formMessage.style.display = 'block';
-                formMessage.style.color = 'red';
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            formMessage.textContent = 'Error submitting booking.';
-            formMessage.style.display = 'block';
-            formMessage.style.color = 'red';
-        }
+        // Log the booking data (in a real deployment, this would be sent to your backend)
+        console.log('Booking data:', formData);
     });
 
     // Soft scroll for anchors

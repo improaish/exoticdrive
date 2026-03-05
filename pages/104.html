@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delhi to Shimla: Majestic Mountain Vistas | ExoticDrive</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { color-scheme: dark; }
+        .blog-container { max-width: 900px; margin: 0 auto; padding: 100px 20px; }
+        .blog-header { margin-bottom: 50px; }
+        .blog-content { line-height: 1.8; font-size: 1.1rem; color: #ccc; }
+        .blog-content h2, .blog-content h3 { color: var(--accent-color); margin-top: 40px; margin-bottom: 20px; }
+        .blog-content p { margin-bottom: 20px; }
+        .blog-content ul { margin-bottom: 20px; padding-left: 20px; }
+        .blog-content li { margin-bottom: 10px; }
+        .back-link { display: inline-block; margin-bottom: 30px; color: var(--accent-color); text-decoration: none; font-weight: 700; }
+        .mini-booking { background: var(--card-bg); border: 1px solid var(--glass-border); padding: 40px; border-radius: 20px; margin-top: 80px; }
+        .price-tag { font-size: 1.5rem; color: var(--accent-color); font-weight: 700; margin-bottom: 20px; display: block; }
+    </style>
+</head>
+<body>
+    <div class="blog-container">
+        <a href="/CarRent/#home" class="back-link">&larr; BACK TO FLEET</a>
+        <div class="blog-header">
+            <h1 style="font-size: 3.5rem; margin-bottom: 20px;">Delhi to Shimla: Majestic Mountain Vistas</h1>
+            <span class="price-tag">$1,500 (Executive Mountain Package)</span>
+        </div>
+
+        <div class="blog-content">
+            <p>Shimla, the 'Queen of Hills', remains the most popular hill station from Delhi. Its colonial heritage coupled with the breathtaking backdrop of the Himalayas makes it a top-tier destination.</p>
+
+            <h2>Climbing the Heights</h2>
+            <p>The 350km journey takes you through the Himalayan Expressway. A high-torque luxury SUV or a performance sedan like our <strong>Rolls-Royce</strong> ensures a fatigue-free climb to 2,205 meters.</p>
+
+            <h3>Heritage & Nature</h3>
+            <ul>
+                <li><strong>The Ridge:</strong> A vast open space in the heart of Shimla, offering stunning views of the mountain ranges.</li>
+                <li><strong>Mall Road:</strong> Perfect for high-end shopping and colonial architecture photography.</li>
+                <li><strong>Jakhoo Temple:</strong> A spiritual trek (or a quick drive) to the highest point in Shimla.</li>
+            </ul>
+
+            <p>Experience the cool mountain air with the window down in a car that defines status.</p>
+        </div>
+
+        <section id="reserve" class="mini-booking">
+            <h2 style="margin-bottom: 20px;">Quick Reserve for this Route</h2>
+            <p style="margin-bottom: 30px; color: #888;">Specify your details to book a premium ride for this destination.</p>
+            <form id="blog-booking-form">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <input type="text" id="b-name" placeholder="Your Name" required style="padding: 12px; background: #111; border: 1px solid #333; color: #fff; border-radius: 5px;">
+                    <input type="email" id="b-email" placeholder="Your Email" required style="padding: 12px; background: #111; border: 1px solid #333; color: #fff; border-radius: 5px;">
+                    <input type="date" id="b-date" required style="padding: 12px; background: #111; border: 1px solid #333; color: #fff; border-radius: 5px;">
+                    <button type="submit" class="btn" style="border: none; cursor: pointer;">Book Now</button>
+                </div>
+            </form>
+            <div id="b-message" style="margin-top: 20px; text-align: center; display: none; color: var(--accent-color);"></div>
+        </section>
+    </div>
+
+    <script>
+        document.getElementById('blog-booking-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = {
+                name: document.getElementById('b-name').value,
+                email: document.getElementById('b-email').value,
+                date: document.getElementById('b-date').value,
+                car: 'Delhi to Shimla: Majestic Mountain Vistas - Rolls-Royce',
+                source: 'Blog Page'
+            };
+
+            const msg = document.getElementById('b-message');
+            msg.textContent = 'Booking request received! Our travel concierge will contact you within 24 hours.';
+            msg.style.display = 'block';
+            e.target.reset();
+
+            console.log('Booking data:', formData);
+        });
+    </script>
+</body>
+</html>
